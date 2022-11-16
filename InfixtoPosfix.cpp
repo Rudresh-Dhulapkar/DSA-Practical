@@ -1,0 +1,161 @@
+#include<iostream>
+#include<cstring>
+using namespace std;
+#define MAX 50
+
+class stack{
+	private:
+		char arr[MAX], exp[MAX], pos[MAX];
+		int top, t;
+		
+	public:
+		stack();
+		void push( char x);
+		void pop();
+		void convert();
+		void evaluate();
+		int isempty();
+};
+
+stack::stack(){
+	top=-1;		
+	t=0;
+	convert();
+	evaluate();
+}
+
+void stack::convert(){
+	int n;
+	cout<<"Enter the Infix Expresion"<<endl;
+	cin>>exp;
+	n=strlen(exp);
+	for(int i=0;i<n;i++){
+		if((exp[i]=='(')||(exp[i]=='+')||(exp[i]=='-')||(exp[i]=='*')||(exp[i]=='/')||(exp[i]=='%')||(exp[i]=='^')){	
+			push(exp[i]);
+		}
+		else if(exp[i]==')'){																						
+			while(arr[top]!='('){			
+				pos[t]=arr[top];
+				t++;
+				pop();
+			}
+			if(arr[top]=='(')
+			pop();
+		}
+		else{
+			pos[t]=exp[i];
+			t++;
+		}
+	}
+	
+	if(!isempty()){
+		while(top>=0){
+			pos[t]=arr[top];
+			pop();
+			t++;
+		}
+	}
+	
+	cout<<"The posfix expresion is: "<<endl;
+	for(int j=0;j<t;j++){
+		cout<<pos[j];
+	}
+}
+
+void stack::evaluate(){
+	int i, ans, eval[MAX], j=0;
+	char ch;
+	for(i=0;i<t;i++){
+		ch=pos[i];
+		if((ch=='+')||(ch=='-')||(ch=='*')||(ch=='/')||(ch=='%')||(ch=='^')){
+			switch(ch){
+				case'+':
+					ans=eval[j-2]+eval[j-1];
+					break;
+				case'-':
+					ans=eval[j-2]-eval[j-1];
+					break;	
+				case'*':
+					ans=eval[j-2]*eval[j-1];
+					break;
+				case'/':
+					ans=eval[j-2]/eval[j-1];
+					break;
+				case'%':
+					ans=eval[j-2]%eval[j-1];
+					break;
+				case'^':
+					ans=1;
+					for(int k=0;k<eval[j-1];k++){
+						ans=ans*eval[j-2];
+					}
+					break;
+			}
+			j=j-2;
+			eval[j]=ans;
+			j++;
+		}
+		else{
+			if(ch=='0'){
+				eval[j]=0;
+			}
+			else if(ch=='1'){
+				eval[j]=1;
+			}
+			else if(ch=='2'){
+				eval[j]=2;
+			}
+			else if(ch=='3'){
+				eval[j]=3;
+			}
+			else if(ch=='4'){
+				eval[j]=4;
+			}
+			else if(ch=='5'){
+				eval[j]=5;
+			}
+			else if(ch=='6'){
+				eval[j]=0;
+			}
+			else if(ch=='6'){
+				eval[j]=0;
+			}
+			else if(ch=='7'){
+				eval[j]=7;
+			}
+			else if(ch=='8'){
+				eval[j]=0;
+			}
+			else if(ch=='8'){
+				eval[j]=0;
+			}
+			else if(ch=='9'){
+				eval[j]=9;
+			}
+			j++;
+		}
+	}
+	
+	cout<<endl<<"The answer of the expression is:"<<eval[0]<<endl;
+}
+
+int stack::isempty(){
+	if(top<0)
+		return 1;
+	else
+		return 0;
+}
+
+void stack::push(char x){
+	top++;
+	arr[top]=x;
+}
+
+void stack::pop(){
+	top--;
+}
+
+int main(){
+	stack s;
+	return 0;
+}
