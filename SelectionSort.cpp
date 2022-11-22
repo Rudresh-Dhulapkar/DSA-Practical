@@ -2,11 +2,11 @@
 #define MAX 10
 using namespace std;
 template<class T>
-class BubbleSort
+class SelectionSort
 {
 	T arr[MAX],temp;
 	int n;
-	public: BubbleSort()
+	public: SelectionSort()
 			{
 				insert();
 				display();
@@ -14,13 +14,12 @@ class BubbleSort
 			void swap(T *a,T *b){ 
 			temp=*a;
 			*a=*b;
-			*b=temp;
-			}
+			*b=temp;}
 			void insert();
 			void sort();
 			void display();
 };
-template<class T> void BubbleSort<T>::insert()
+template<class T> void SelectionSort<T>::insert()
 {
 	cout<<"Enter the number of terms"<<endl;
 	cin>>n;
@@ -29,27 +28,28 @@ template<class T> void BubbleSort<T>::insert()
 	cin>>arr[i];
 	cout<<"Before sorting"<<endl;
 	for(int i=0;i<=n-1;i++)
-	cout<<arr[i]<<" ";
+	cout<<arr[i]<<"	";
 	sort();
 }
-template<class T>void BubbleSort<T>::sort()
+template<class T> void SelectionSort<T>::sort()
 {
-	int ch;
+	int ch,var;
 	for(int i=0;i<=n-1;i++)
 	{
-		for(int j=0;j<n-i-1;j++)
+		var=i;
+		for(int j=i+1;j<=n-1;j++)
 		{
-			if(arr[j]>=arr[j+1]){
-				swap(&arr[j],&arr[j+1]);
-			}
+				if(arr[j]<arr[var])
+				var=j; 
 		}
+		swap(&arr[i],&arr[var]);
 	}
 }
-template<class T>void BubbleSort<T>::display()
+template<class T> void SelectionSort<T>::display()
 {
-	cout<<endl<<"After sorting:"<<endl;
+	cout<<"After sorting:"<<endl;
 	for(int i=0;i<=n-1;i++)
-	cout<<arr[i]<<" ";
+	cout<<arr[i]<<"	";
 }
 int main()
 {
@@ -57,12 +57,9 @@ int main()
 	cout<<"Enter 1: Sorting"<<endl;
 	cin>>ch;
 	if(ch==1){
-		BubbleSort<int> a;
+		SelectionSort<float> a;
 	}
-
-	else{
-		cout<<"INVALID INPUT"<<endl;
-	}
+	else
+	cout<<"INVALID INPUT";
 	return 0;
 }
-			
